@@ -34,21 +34,76 @@ df[2]
 df[[2]]
 
 # list
+# list는 vector들의 특성을 유지시켜 준다
+
+L = list(c(1,2,3),mat,df)
+print(L)
+
+L[[1]]
 
 
+# list function : lapply, sapply
+# lapply(list, function)
+x1 = c(1,2,3)
+x2 = c(10,20,30)
+x3 = c(100,200,300)
+
+Lst = list(x1, x2, x3)
+Lst
+
+lapply(Lst, mean)
+
+# df에도 적용해보기
+df = data.frame(x1,x2,x3)
+print(df)
+
+lapply(df, mean)
+
+# names : list 이름
+names(Lst)
+names(Lst) = c('a','b','c')
+print(Lst)
+
+Lst['a']
+Lst[['a']]
+Lst$a
+
+# [[]], [] 차이점
+# out data의 객체 type이 달라짐
 
 
+L = list(c(1,2,3),mat,df)
+print(L)
+
+L[[2]]      # data frame으로 나옴 [[]] 일때
+print(class(L[[2]]))
+L[[3]]      # vector
+L[[2]][1,2] # 2번째 list에 1행2열의 vector 추출
+
+L[2]        # list로 나옴
+print(class(L[2]))
+L[2][1,2]   # list여서 불가능능
+
+df
+df[[2]]    # vector
+print(class(df[[2]]))
+df[[2]][2] # 2열의 vector에서 2번째 vector
+df[2]      # data.frmae 으로 나옴
+print(class(df[2]))
+df[c(1,3)] # 새로운 data frame이 만들어짐
 
 
+# 심화
+cities = c("New York,Ny","Ann Arbor,MI","Chicago,CI")
+print(cities)
+out = strsplit(cities,',') # 하나의 vector를 조건에 맞게 잘라 주는 것 # list 형태로 출력해줌
+print(out)
 
-
-
-
-
-
-
-
-
+# 방법 unlist function 사용
+out1 = unlist(out)
+out1[c(2,4,6)]
+out1[seq(2,length(out1),2)]  # seq(시작점, 마지막, k_몇씩 증가)
+out1[nchar(out1) ==2]  # nchar(문자의 수)
 
 
 

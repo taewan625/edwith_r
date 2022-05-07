@@ -138,7 +138,8 @@ str(f)
 
 # 방법 2가지 factor -> charac -> num
 f$BareNuclei = as.numeric(as.character(f$BareNuclei))  # 처음에는 경고가 나오는데 이는 ?를 NA로 변환했다는 것. ? 관련된 numeric이 없어서
-f = transform(f, BareNuclei = as.numeric(as.character(BareNuclei)))
+f = transform(f, BareNuclei = as.numeric(as.character(BareNuclei)),
+              group = factor(group, labels=c('Benign','Malignant')))  # 마지막에 group별로 mean을 나눴는데 이때 이름으로 facotr로 명명하고 싶어서 추가한 코드
 str(f)
 mean(f$BareNuclei)
 
@@ -172,7 +173,7 @@ lapply(f, function(x) mean(x[!is.na(x)]))
 # factor를 num으로 바꾸는 법 & NA값 제외하고 계산하는 방법 2가지를 배웠다다
 
 fn = function(x) tapply(x, f$group, mean, na.rm=T)  # tapply는 group별로 구하는 것
-lapply(f,fn)
+lapply(f[,-c(ncol(f))],fn)  # 수치형이 아닌 것을 제외하고 결과가 잘나옴. 경고메시지를 빼고 싶으면 이코드처럼해서 (의미: -c로 마지막 colum)
 
 
 

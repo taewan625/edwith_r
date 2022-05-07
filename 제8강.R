@@ -175,6 +175,8 @@ lapply(f, function(x) mean(x[!is.na(x)]))
 fn = function(x) tapply(x, f$group, mean, na.rm=T)  # tapply는 group별로 구하는 것
 lapply(f[,-c(ncol(f))],fn)  # 수치형이 아닌 것을 제외하고 결과가 잘나옴. 경고메시지를 빼고 싶으면 이코드처럼해서 (의미: -c로 마지막 colum)
 
+# data.frame으로 변경
+as.data.frame(lapply(f[,-c(ncol(f))], fn))
 
 
 

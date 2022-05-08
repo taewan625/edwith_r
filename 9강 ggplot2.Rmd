@@ -1,0 +1,77 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# Tip
+chunk 이외의 것은 markdown 언어로 HTML 형식처럼 이용 가능
+
+chunk의 코드 내용: run click or ctrl + shift +enter  내용 숨김이 가능
+
+New chunk: ctrl + Alt + I
+
+notebook 미리보기 : preview or ctrl+shift+k
+
+notebook HTML 저장 : Preview - Knit on html 
+
+
+# loading packages
+```{r}
+library(ggplot2)
+library(ISwR)
+
+```
+
+x축을 age로 두고 y축을 height를 둠 이때 어떤 자료에서 가져올것인지 쓰고 $로 연결 시켜야 함
+```{r}
+plot(x=cystfibr$age, y=cystfibr$height)
+```
+만약 이름을 저렇게 쓰기 싫으면 with 함수로 data.frame과 list 함수를 지정해주고 x,y축을 명시해 줌
+```{r}
+with(cystfibr, plot(x=age, y=height))
+```
+ggplot 기본 구조
+ggplot(data, aes(mapping_info))+graphic_type
+먼저 data(data.frame, list) 넣고 aes=aesthetics에 내가 넣고 싶은 mapping_info 넣고 마지막에 garaphic_type 넣기
+*graphic_type : geom_point() geom_line() geom_boxplot()   geom = geometric
+
+```{r}
+ggplot(cystfibr, aes(x=age, y=height)) + geom_point()
+```
+
+## barplot
+숫자로 된 sex 정보를 male, female로 변환
+너비와 높이 조절 가능
+라벨을 변경 및 첨가 가능
+title도 넣을 수 있다
+```{r, fig.width=3, fig.height=3}
+cystfibr =transform(cystfibr, sex1= factor(sex, labels=c('male','female')))
+ggplot(cystfibr, aes(x=sex1)) +geom_bar()+
+ xlab('sex')+
+ ylab('number')+
+ ggtitle('sex plot')
+ 
+```
+
+수치가 아닌 data이면 factor가 아니여도 범주형으로 들어감. 
+위의 코드에서 geom_point()sms x와 y의 값을 취해야 하므로 default 값인 count를 identity로 바꿔줘야함
+
+```{r, fig.width=3, fig.height=3}
+cystfibr =transform(cystfibr, sex1= factor(sex, labels=c('male','female')))
+ggplot(cystfibr, aes(x=sex1)) +geom_bar(stat = 'identity')+
+ xlab('sex')+
+ ylab('number')+
+ ggtitle('sex plot')
+ 
+```
+
+
+
+
+
+
+
+
+
+
+
+

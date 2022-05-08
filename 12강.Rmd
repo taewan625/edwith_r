@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# t.test
+## t.test practice 1 _ independent two sample t-test car의 auto와 nonauto 는 독립적 결과다
+mtcars의 data에서 mpg 값이 am에 따라 차이가 있는지 확인하는 것
+```{r}
+t.test(x=mtcars[mtcars$am==0, 'mpg'],
+       y=mtcars[mtcars$am==1, 'mpg'])
+```
+p-value = 0.001374 유의하다
+t-test는 정규분포를 따러야 되고 만약 안따르면 data 수가 30개 넘으면 됨
+
+## 정규성 분포 확인
+귀무가설: 주어진 자료는 정규분포를 따른다  p-value가 0.05보다 작으면 정규분포를 따르지 않는다라고 기각이 된다
+mpg data의 p-value가 0.05 이상이므로 귀무가설을 기각할수 없으므로 정규분포를 따른다고 할 수 있다
+
+```{r}
+shapiro.test(mtcars$mpg)
+```
+
+```{r fig.width=7, fig.height=7}
+library(car)
+par(mfrow=c(2,2)) 
+# par는 그림과 관련된 여러 parameter을 지정해주는 함수. mfrow는 multi figure를 2 by 2로 나타내고 row 여서 행의 순서대로 나타남
+# fig1
+hist(mtcars$mpg)
+# fig2
+hist(mtcars$mpg, freq = F)  # freq=T 일때는 빈도를 나타내지만 F일때는 밀도를 나타냄 = 확률밀도함수
+lines(density(mtcars$mpg))  # density함수는 x,y축 값을 주고 이를 lines 함수로 이어나감
+# fig3
+hist(mtcars$mpg, freq = F)
+lines(density(mtcars$mpg))
+rug(mtcars$mpg)             # rug함수는 1차원 data 값을 x축에 표시하여 정확히 data가 어디에 있는지 보여줌
+# fig4
+qqPlot(mtcars$mpg)          # P가 대문자 이고 qqPlot을 사용하기 위해 library(car)가 필요
+```
+## 등분산 test
+내 data가 등분산이라면 t.test에서 var.equal=FALSE 인 default값을 true로 바꿔줘야함
+이 data는 p-value가 0.05를 넘기 때문에 귀무가설을 기각할 수 없어서 등분산이 성립됨을 알 수 있다
+```{r}
+var.test(mpg~am, mtcars)
+```
+var.equal=FALSE 일때 t.test
+```{r}
+t.test(mpg~am, mtcars)
+```
+var.equal=TRUE 일때 t.test
+```{r}
+t.test(mpg~am, mtcars, var.equal=T)
+```
+p-value가 더 유의한 값이 나옴을 알 수 있다
+
+
+### boxplot
+```{r fig.width=3, fig.height=3}
+boxplot(mpg~am, mtcars)
+```
+
+## t.test practice 2 _ paired sample t-test 10명의 약물 투여 전 후 data는 연관성이 있다
+paired = TRUE로 고쳐서 진행
+##  t.test practice 2 _ ONE sample t-test 한 그룹의 값이 특정 평균값을 가지는지 test
+mu=0 default 인 t-test는 한 그룹의 평균이 0과 같다는 의미
+ex) 한 집단의 키의 평균이 160이라고 할 때 y=NULL로 두고 mu=160 으로 기입해 줘서 나타냄
+
+
+# chisq.test
+두 범주형 data가 있을 때 두 data가 서로 독립인지 아닌지 확인하는 함수
+ppt-57p부터
+해석할줄알아야할듯...
+```{r}
+
+```
+
+

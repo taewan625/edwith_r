@@ -100,9 +100,12 @@ ggplot(cystfibr, aes(x=age, y=height)) +
 ```
 
 위의 것을 볼때 as.factor로 너무 많이 반복 사용 그래서 변경을 시킬 것임
-
+그전 code에서 0,1을 labels를 이용해서 male과 female로 바꿔서 바로 levels에서 위치 변경이 가능
+원래는 levels 1,0으로 바꾸고 labels female male로 해야함
 ```{r, fig.width=5, fig.height=3}
-cystfibr = transform(cystfibr, sex=factor(sex, labels=c('male','female')))
+# cystfibr = transform(cystfibr, sex=factor(sex, levels=c(1,0), labels=c('female','male')))
+
+cystfibr = transform(cystfibr, sex=factor(sex, levels=c('female','male')))
 # label 적용도 가능 -> 0,1을 male,female로 변경 levels로 순서 변경 가능
 ggplot(cystfibr, aes(x=age, y=height)) + 
  geom_point(aes(colour=sex, fill=sex, size=sex), shape=21) +
@@ -111,5 +114,23 @@ ggplot(cystfibr, aes(x=age, y=height)) +
  scale_size_manual(values = c(3,2))
 ```
 R tutorial ggplot2에 들어가면 다양한 것들이 나옴
+
+##index 위치 이동 및 그래프 여백 만들기
+```{r, fig.width=5, fig.height=3}
+cystfibr = transform(cystfibr, sex=factor(sex, levels=c('female','male')))
+ggplot(cystfibr, aes(x=age, y=height)) + 
+ geom_point(aes(colour=sex, fill=sex, size=sex), shape=21) +
+ scale_colour_manual(values=c('white','blue')) +
+ scale_fill_manual(values = c('pink', 'green')) +
+ scale_size_manual(values = c(3,2)) +
+ theme(legend.position = c(0,1)) + # index 위치를 이동시키는 code
+ theme(plot.margin = unit(c(10,20,30,40),'mm')) # 그래프 여백 만드는 code
+```
+
+
+
+
+
+
 
 

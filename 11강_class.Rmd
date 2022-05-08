@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+# s3 함수 실습
+generic 함수인 hello는 class에 특이적으로 내용을 수행하는 함수
+hello(obj)는 obj의 class는 game_character이고 
+hello.game_character가 존재한다 그러면 다음 단계로 함수가 수행할 것을 진행한다
+이 때 수행 할 것은 print에 적혀있는 내용이다
+```{r}
+obj1 = structure(
+ list(ID='none', pw='0000'),
+ class='game_character'      # 위에 같은 경우는 존재하지 않았던 함수에서 사용자가 원하는 이름을 넣은 사용자 지정함수 이다
+)
+class(obj1)
+hello = function(obj) UseMethod('hello')   # 왜 obj1 이 아닌 obj를 사용하는지 모르겠음
+hello.game_character = function(obj) print(paste('hello',obj$ID))
+
+hello(obj1)
+```
+다른 예로 factor class를 만들고 그냥 hello라는 general 함수를 수행하면 factor에 관한 hello 함수가 존재하지 않아 작동이 X
+```{r}
+f=factor('test')
+class(f)
+hello(f)  # factor class가 없어서 작동 안함
+```
+작동하게 하려면 hello에 hello.factor를 만들어주면 된다
+```{r}
+f=factor('test')
+class(f)
+hello.factor = function(x) print('hello factor')  # 그냥 'hello factor' 해도 print 가능
+hello(f)
+```
+
+
+
+

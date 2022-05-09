@@ -63,7 +63,8 @@ plot(lm.out)
 
 ```
 (2,2): 반응변수(종속변수)중 튀는 값은 outlyer이라고 하고 설명변수중에 큰 값을 leverage 튀는 값이라고 한다
-       cook's distance 0.5랑 1이 
+       cook's distance 0.5랑 1이 (회색갈 점선 가생이에 있는 것) 이게 크면 data 1개 자체의 영향이 크다고 말할 수 있다
+       
 
 
 
